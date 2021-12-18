@@ -11,7 +11,8 @@ import SwiftUI
 struct WordlApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            let mainViewModel = MainViewModel()
+            MainView(viewModel: mainViewModel)
         }
     }
 }
