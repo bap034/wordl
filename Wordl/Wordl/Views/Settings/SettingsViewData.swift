@@ -10,13 +10,21 @@ import Foundation
 enum SettingsSection: String, CaseIterable, Identifiable {
     case dictionary
     case rules
-    case customOptions
+    case custom
     
     var id: String { self.rawValue }
+    var displayText: String {
+        switch self {
+            case .dictionary:   return "Word List"
+            case .rules:        return "Rules"
+            case .custom:       return "Modifiers"
+        }
+    }
 }
 enum SettingsCellDataType {
     case standard
-    case dropdown
+    case picker
+    case toggle
 }
 
 struct SettingsCellData: Identifiable {

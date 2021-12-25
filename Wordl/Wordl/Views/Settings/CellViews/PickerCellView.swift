@@ -1,5 +1,5 @@
 //
-//  SettingsDropDownCellView.swift
+//  PickerCellView.swift
 //  Wordl
 //
 //  Created by Brett Petersen on 12/20/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsDropDownCellView: View {
+struct PickerCellView: View {
     
     @State var titleText: String?
     @State var descriptionText: String?
@@ -41,6 +41,12 @@ struct SettingsDropDownCellView: View {
                 
             }
             .padding([.leading, .trailing])
+            .contentShape(Rectangle())
+            .onTapGesture {
+//                withAnimation {
+                    showPicker.toggle()
+//                }
+            }
             
             if showPicker {
                 Picker("Select Value", selection: $selectedValue) {
@@ -48,15 +54,15 @@ struct SettingsDropDownCellView: View {
                         Text($0)
                     }
                 }
-                .pickerStyle(.wheel)
+                .pickerStyle(.segmented)
                 .onChange(of: selectedValue) { newValue in
-                    onValueChange?(newValue)
+//                    withAnimation {
+                        onValueChange?(newValue)
+//                    }
                 }
             }
         }
-        .onTapGesture {
-            showPicker.toggle()
-        }
+        
     }
 }
 
@@ -65,10 +71,17 @@ struct SettingsDropDownCellView_Previews: PreviewProvider {
     static var previews: some View {
         
 //        let selectedValue:Binding<String> = Binding<String>.constant("value")
-        SettingsDropDownCellView(titleText: "title",
-                                 descriptionText: "description",
-                                 selectedValue: "value",
-                                 pickerOptions: ["test1", "test2", "test3"],
-                                 showPicker: true)
+        VStack {
+            PickerCellView(titleText: "title",
+                             descriptionText: "description",
+                             selectedValue: "value",
+                             pickerOptions: ["test1", "test2", "test3"],
+                             showPicker: true)
+            PickerCellView(titleText: "title",
+                             descriptionText: "description",
+                             selectedValue: "value",
+                             pickerOptions: ["test1", "test2", "test3"],
+                             showPicker: false)
+        }
     }
 }

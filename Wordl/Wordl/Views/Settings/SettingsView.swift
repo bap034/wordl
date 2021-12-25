@@ -14,21 +14,29 @@ struct SettingsView: View {
     var body: some View {
         List {
             ForEach(SettingsSection.allCases) { section in
-                Section {
+                Section(section.displayText) {
                     let datas = viewModel.getCellDatas(section: section)
                     ForEach(datas) { data in
                         switch data.type {
                             case .standard:
-                                SettingsStandardCellView(titleText: data.titleText, descriptionText: data.descriptionText, isSelected: data.isSelected) {
+                                SelectCellView(titleText: data.titleText,
+                                               descriptionText: data.descriptionText,
+                                               isSelected: data.isSelected) {
                                     viewModel.onSelected(id: data.id)
                                 }
-                            case .dropdown:
-                                SettingsDropDownCellView(titleText: data.titleText,
+                            case .picker:
+                                PickerCellView(titleText: data.titleText,
                                                          descriptionText: data.descriptionText,
                                                          selectedValue: data.ruleValue,
                                                          pickerOptions: data.dropDownOptions,
                                                          showPicker: false) { newValue in
                                     viewModel.onValueChanged(newValue: newValue, id: data.id)
+                                }
+                            case .toggle:
+                                ToggleCellView(titleText: data.titleText,
+                                               descriptionText: data.descriptionText,
+                                               isOn: data.isSelected) { newValue in
+                                    viewModel.onValueChanged(newValue: String(newValue), id: data.id)
                                 }
                         }
                     }

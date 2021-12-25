@@ -45,7 +45,7 @@ class SettingsViewModel: ObservableObject {
             switch ruleType {
                 case .minLetters:
                     section = .rules
-                    cellType = .dropdown
+                    cellType = .picker
                     isSelected = false
                     
                     let minLengthRange = 3...manager.rules.maxLetters
@@ -56,7 +56,7 @@ class SettingsViewModel: ObservableObject {
                     
                 case .maxLetters:
                     section = .rules
-                    cellType = .dropdown
+                    cellType = .picker
                     isSelected = false
                     
                     let maxLengthRange = manager.rules.minLetters...12
@@ -65,8 +65,8 @@ class SettingsViewModel: ObservableObject {
                     
                     ruleValue = String(manager.rules.maxLetters)
                 case .missingLast:
-                    section = .customOptions
-                    cellType = .standard
+                    section = .custom
+                    cellType = .toggle
                     isSelected = manager.rules.missingLast
                     dropDownOptions = []
                     ruleValue = String(manager.rules.missingLast)

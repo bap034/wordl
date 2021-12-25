@@ -14,10 +14,11 @@
 		8B70224A2771089900323A97 /* WordFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7022492771089900323A97 /* WordFeedback.swift */; };
 		8B70224C277108C300323A97 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70224B277108C300323A97 /* Rules.swift */; };
 		8B70224F277116C700323A97 /* GameDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70224E277116C700323A97 /* GameDictionary.swift */; };
-		8B702252277145E900323A97 /* SettingsStandardCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B702251277145E900323A97 /* SettingsStandardCellView.swift */; };
-		8B7022542771612C00323A97 /* SettingsDropDownCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7022532771612C00323A97 /* SettingsDropDownCellView.swift */; };
+		8B702252277145E900323A97 /* SelectCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B702251277145E900323A97 /* SelectCellView.swift */; };
+		8B7022542771612C00323A97 /* PickerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7022532771612C00323A97 /* PickerCellView.swift */; };
 		8B702256277654F500323A97 /* SettingsViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B702255277654F500323A97 /* SettingsViewData.swift */; };
 		8B70225827765D0C00323A97 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70225727765D0C00323A97 /* Rule.swift */; };
+		8BB8B2012777C20000A85FB9 /* ToggleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B2002777C20000A85FB9 /* ToggleCellView.swift */; };
 		8BEEAFA4276DB96C000ABB35 /* WordlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA3276DB96C000ABB35 /* WordlApp.swift */; };
 		8BEEAFA6276DB96C000ABB35 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA5276DB96C000ABB35 /* MainView.swift */; };
 		8BEEAFA8276DB96D000ABB35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA7276DB96D000ABB35 /* Assets.xcassets */; };
@@ -35,10 +36,11 @@
 		8B7022492771089900323A97 /* WordFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFeedback.swift; sourceTree = "<group>"; };
 		8B70224B277108C300323A97 /* Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		8B70224E277116C700323A97 /* GameDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDictionary.swift; sourceTree = "<group>"; };
-		8B702251277145E900323A97 /* SettingsStandardCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStandardCellView.swift; sourceTree = "<group>"; };
-		8B7022532771612C00323A97 /* SettingsDropDownCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDropDownCellView.swift; sourceTree = "<group>"; };
+		8B702251277145E900323A97 /* SelectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCellView.swift; sourceTree = "<group>"; };
+		8B7022532771612C00323A97 /* PickerCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCellView.swift; sourceTree = "<group>"; };
 		8B702255277654F500323A97 /* SettingsViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewData.swift; sourceTree = "<group>"; };
 		8B70225727765D0C00323A97 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
+		8BB8B2002777C20000A85FB9 /* ToggleCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCellView.swift; sourceTree = "<group>"; };
 		8BEEAFA0276DB96C000ABB35 /* Wordl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wordl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEEAFA3276DB96C000ABB35 /* WordlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordlApp.swift; sourceTree = "<group>"; };
 		8BEEAFA5276DB96C000ABB35 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -93,8 +95,9 @@
 		8B702250277145D600323A97 /* CellViews */ = {
 			isa = PBXGroup;
 			children = (
-				8B702251277145E900323A97 /* SettingsStandardCellView.swift */,
-				8B7022532771612C00323A97 /* SettingsDropDownCellView.swift */,
+				8B702251277145E900323A97 /* SelectCellView.swift */,
+				8BB8B2002777C20000A85FB9 /* ToggleCellView.swift */,
+				8B7022532771612C00323A97 /* PickerCellView.swift */,
 			);
 			path = CellViews;
 			sourceTree = "<group>";
@@ -230,13 +233,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BB8B2012777C20000A85FB9 /* ToggleCellView.swift in Sources */,
 				8B702244277100CB00323A97 /* SettingsView.swift in Sources */,
 				8B70224C277108C300323A97 /* Rules.swift in Sources */,
-				8B7022542771612C00323A97 /* SettingsDropDownCellView.swift in Sources */,
+				8B7022542771612C00323A97 /* PickerCellView.swift in Sources */,
 				8B7022472771013100323A97 /* GameManager.swift in Sources */,
 				8B70224F277116C700323A97 /* GameDictionary.swift in Sources */,
 				8B70225827765D0C00323A97 /* Rule.swift in Sources */,
-				8B702252277145E900323A97 /* SettingsStandardCellView.swift in Sources */,
+				8B702252277145E900323A97 /* SelectCellView.swift in Sources */,
 				8BEEAFA6276DB96C000ABB35 /* MainView.swift in Sources */,
 				8B702256277654F500323A97 /* SettingsViewData.swift in Sources */,
 				8BEEAFA4276DB96C000ABB35 /* WordlApp.swift in Sources */,
