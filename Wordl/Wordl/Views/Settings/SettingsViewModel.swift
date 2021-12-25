@@ -11,7 +11,7 @@ import Foundation
 
 class SettingsViewModel: ObservableObject {
     
-    @Published public private(set)var cellDatas = [SettingsCellDataProtocol]()
+    @Published public private(set) var cellDatas = [SettingsCellData]()
     
     private let manager: GameManager
     
@@ -20,64 +20,77 @@ class SettingsViewModel: ObservableObject {
         cellDatas = generateSettingsDatas()
     }
     
-    private func generateSettingsDatas() -> [SettingsCellDataProtocol] {
-        var cellDatas = [SettingsCellDataProtocol]()
+    private func generateSettingsDatas() -> [SettingsCellData] {
+        var cellDatas = [SettingsCellData]()
         
         // Dictionary Section
         DictionaryType.allCases.forEach { dictionaryType in
-            let cellData = SettingsStandardCellData(titleText: dictionaryType.titleText,
-                                                    descriptionText: dictionaryType.descriptionText,
-                                                    section: .dictionary,
-                                                    isSelected: manager.rules.dictionary == dictionaryType,
-                                                    ruleType: nil,
-                                                    ruleValue: dictionaryType.rawValue)
+            let cellData = SettingsCellData(titleText: dictionaryType.titleText,
+                                            descriptionText: dictionaryType.descriptionText,
+                                            section: .dictionary,
+                                            type: .standard,
+                                            isSelected: manager.rules.dictionary == dictionaryType,
+                                            dropDownOptions: [],
+                                            ruleType: nil,
+                                            ruleValue: dictionaryType.rawValue)
             cellDatas.append(cellData)
         }
         
         Rule.RuleType.allCases.forEach { ruleType in
-            let data: SettingsCellDataProtocol
+            let section: SettingsSection
+            let cellType: SettingsCellDataType
+            let isSelected: Bool
+            let dropDownOptions: [String]
+            let ruleValue: String
             switch ruleType {
                 case .minLetters:
+                    section = .rules
+                    cellType = .dropdown
+                    isSelected = false
+                    
                     let minLengthRange = 3...manager.rules.maxLetters
                     let minLengthRangeStrings = minLengthRange.map({ String($0) })
-                    let ruleValue = String(manager.rules.minLetters)
-                    data = SettingsDropDownCellData(titleText: ruleType.titleText,
-                                                    descriptionText: ruleType.descriptionText,
-                                                    section: .rules,
-                                                    dropDownOptions: minLengthRangeStrings,
-                                                    ruleType: ruleType,
-                                                    ruleValue: ruleValue)
+                    dropDownOptions = minLengthRangeStrings
+                    
+                    ruleValue = String(manager.rules.minLetters)
+                    
                 case .maxLetters:
+                    section = .rules
+                    cellType = .dropdown
+                    isSelected = false
+                    
                     let maxLengthRange = manager.rules.minLetters...12
                     let maxLengthRangeStrings = maxLengthRange.map({ String($0) })
-                    let ruleValue = String(manager.rules.maxLetters)
-                    data = SettingsDropDownCellData(titleText: ruleType.titleText,
-                                                    descriptionText: ruleType.descriptionText,
-                                                    section: .rules,
-                                                    dropDownOptions: maxLengthRangeStrings,
-                                                    ruleType: ruleType,
-                                                    ruleValue: ruleValue)
+                    dropDownOptions = maxLengthRangeStrings
+                    
+                    ruleValue = String(manager.rules.maxLetters)
                 case .missingLast:
-                    let ruleValue = String(manager.rules.missingLast)
-                    data = SettingsStandardCellData(titleText: ruleType.titleText,
-                                                    descriptionText: ruleType.descriptionText,
-                                                    section: .customOptions,
-                                                    isSelected: manager.rules.missingLast,
-                                                    ruleType: ruleType,
-                                                    ruleValue: ruleValue)
+                    section = .customOptions
+                    cellType = .standard
+                    isSelected = manager.rules.missingLast
+                    dropDownOptions = []
+                    ruleValue = String(manager.rules.missingLast)
             }
+            let cellData = SettingsCellData(titleText: ruleType.titleText,
+                                            descriptionText: ruleType.descriptionText,
+                                            section: section,
+                                            type: cellType,
+                                            isSelected: isSelected,
+                                            dropDownOptions: dropDownOptions,
+                                            ruleType: ruleType,
+                                            ruleValue: ruleValue)
             
-            cellDatas.append(data)
+            cellDatas.append(cellData)
         }
         
         return cellDatas
     }
     
-    func getCellDatas(section: SettingsSection) -> [SettingsCellDataProtocol] {
+    func getCellDatas(section: SettingsSection) -> [SettingsCellData] {
         let filteredCellDatas = cellDatas.filter({ $0.section == section })
         return filteredCellDatas
     }
-    private func getCellData(id: String) -> SettingsCellDataProtocol? {
+    private func getCellData(id: UUID) -> SettingsCellData? {
         let cellData = cellDatas.first(where: { $0.id == id })
         return cellData
     }
@@ -100,7 +113,7 @@ class SettingsViewModel: ObservableObject {
 
 // MARK: - View Action Events
 extension SettingsViewModel {
-    func onSelected(id: String) {
+    func onSelected(id: UUID) {
         guard let cellData = getCellData(id: id) else { return } // Show error text?
             switch cellData.ruleType {
                 case .minLetters, .maxLetters:
@@ -116,7 +129,7 @@ extension SettingsViewModel {
             }
         cellDatas = generateSettingsDatas()
     }
-    func onValueChanged(newValue: String, id: String) {
+    func onValueChanged(newValue: String, id: UUID) {
         guard let cellData = getCellData(id: id) else { return } // Show error text?
         
         manager.updateRule(ruleType: cellData.ruleType, newValue: newValue)

@@ -12,39 +12,30 @@ struct SettingsView: View {
     @ObservedObject var viewModel: SettingsViewModel
     
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(SettingsSection.allCases) { section in
-                    Section {
-                        let datas = viewModel.getCellDatas(section: section)
-                        ForEach(datas.indices) { index in
-                            let data = datas[index]
-                            
-                            if let dropDownData = data as? SettingsDropDownCellData {
-                                SettingsDropDownCellView(titleText: dropDownData.titleText,
-                                                         descriptionText: dropDownData.descriptionText,
-                                                         selectedValue: dropDownData.ruleValue,
-                                                         pickerOptions: dropDownData.dropDownOptions,
+        List {
+            ForEach(SettingsSection.allCases) { section in
+                Section {
+                    let datas = viewModel.getCellDatas(section: section)
+                    ForEach(datas) { data in
+                        switch data.type {
+                            case .standard:
+                                SettingsStandardCellView(titleText: data.titleText, descriptionText: data.descriptionText, isSelected: data.isSelected) {
+                                    viewModel.onSelected(id: data.id)
+                                }
+                            case .dropdown:
+                                SettingsDropDownCellView(titleText: data.titleText,
+                                                         descriptionText: data.descriptionText,
+                                                         selectedValue: data.ruleValue,
+                                                         pickerOptions: data.dropDownOptions,
                                                          showPicker: false) { newValue in
                                     viewModel.onValueChanged(newValue: newValue, id: data.id)
                                 }
-                                
-                            } else if let standardData = data as? SettingsStandardCellData {
-                                SettingsStandardCellView(titleText: standardData.titleText, descriptionText: standardData.descriptionText, isSelected: standardData.isSelected) {
-                                    viewModel.onSelected(id: data.id)
-                                }
-                            }
-                            
                         }
                     }
                 }
             }
-            .navigationTitle("Settings")
         }
-    }
-    
-    private func getStandardCell(data: SettingsCellDataProtocol) -> Text {
-        Text(data.titleText ?? "test")
+        .navigationTitle("Settings")
     }
 }
 

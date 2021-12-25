@@ -14,35 +14,20 @@ enum SettingsSection: String, CaseIterable, Identifiable {
     
     var id: String { self.rawValue }
 }
-
-// MARK: - SettingsCellDataProtocol
-protocol SettingsCellDataProtocol {
-    var titleText: String? { get set }
-    var descriptionText: String? { get set }
-    var section: SettingsSection { get }
-    var ruleType: Rule.RuleType? { get }
-    var ruleValue: String { get }
-}
-extension SettingsCellDataProtocol {
-    var id: String { "\(section)-\(titleText ?? "")" }
+enum SettingsCellDataType {
+    case standard
+    case dropdown
 }
 
-// MARK: - SettingsCellData
-struct SettingsStandardCellData: SettingsCellDataProtocol {    
-    var titleText: String?
-    var descriptionText: String?
+struct SettingsCellData: Identifiable {
+    let titleText: String?
+    let descriptionText: String?
     let section: SettingsSection
-    
-    var isSelected: Bool
+    let type: SettingsCellDataType
+    let isSelected: Bool
+    let dropDownOptions: [String]
     let ruleType: Rule.RuleType?
     let ruleValue: String
-}
-struct SettingsDropDownCellData: SettingsCellDataProtocol {
-    var titleText: String?
-    var descriptionText: String?
-    let section: SettingsSection
     
-    var dropDownOptions: [String]
-    let ruleType: Rule.RuleType?
-    var ruleValue: String
+    let id = UUID()
 }
