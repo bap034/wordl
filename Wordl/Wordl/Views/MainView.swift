@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     
     @State var enteredText: String = ""
+    @State var showSettings = false
     
     @ObservedObject var viewModel: MainViewModel
     
@@ -27,10 +28,12 @@ struct MainView: View {
                     TextField(viewModel.helperText,
                               text: $enteredText)
                         .onSubmit {
-                            viewModel.onTextFieldDidSubmit(newText: enteredText)
-                            if viewModel.shouldResetTextField {
-                                enteredText = ""
-                                viewModel.didResetTextField()
+                            withAnimation {
+                                viewModel.onTextFieldDidSubmit(newText: enteredText)
+                                if viewModel.shouldResetTextField {
+                                    enteredText = ""
+                                    viewModel.didResetTextField()
+                                }
                             }
                         }
                         .textInputAutocapitalization(.characters)
@@ -38,23 +41,37 @@ struct MainView: View {
                 }
                 
                 Section {
-                    ForEach(viewModel.guessedWords) { wordData in
+                    ForEach(viewModel.guessedWords) { wordFeedback in
                         HStack {
-                            ForEach(wordData.feedbacks) { feedback in
-                                let color = getTextColor(feedbackType: feedback.dataType)
-                                Text(feedback.letter)
+                            ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
+                                let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
+                                Text(letterFeedback.letter)
                                     .foregroundColor(color)
                             }
                         }
                     }
                 }
             }
-            .navigationTitle("Wordl")
+            .navigationTitle(
+                Text("Wordl")
+            )
             .toolbar {
-                Button(action: {
-                    viewModel.onNewGameTapped()
-                }) {
-                    Image(systemName: "repeat.circle").imageScale(.large)
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        viewModel.onNewGameTapped()
+                    }) {
+                        Image(systemName: "repeat.circle").imageScale(.large)
+                    }
+                }
+                
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button(action: {
+                        showSettings = true
+                    }) {
+                        NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
+                            Image(systemName: "gearshape").imageScale(.large)
+                        }
+                    }
                 }
             }
         }
@@ -62,9 +79,9 @@ struct MainView: View {
 }
 
 extension MainView {
-    private func getTextColor(feedbackType: GuessedWordData.Feedback.DataType) -> Color {
+    private func getTextColor(letterFeedbackType: WordFeedback.LetterFeedback.DataType) -> Color {
         let color: Color
-        switch feedbackType {
+        switch letterFeedbackType {
             case .correct:
                 color = .teal
             case .wrongSpot:
