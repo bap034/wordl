@@ -19,6 +19,10 @@
 		8B702256277654F500323A97 /* SettingsViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B702255277654F500323A97 /* SettingsViewData.swift */; };
 		8B70225827765D0C00323A97 /* Rule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B70225727765D0C00323A97 /* Rule.swift */; };
 		8BB8B2012777C20000A85FB9 /* ToggleCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B2002777C20000A85FB9 /* ToggleCellView.swift */; };
+		8BB8B204278266C500A85FB9 /* KeyboardKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B203278266C500A85FB9 /* KeyboardKeyView.swift */; };
+		8BB8B20627826B3300A85FB9 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20527826B3300A85FB9 /* KeyboardView.swift */; };
+		8BB8B20827826BE300A85FB9 /* KeyboardKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20727826BE300A85FB9 /* KeyboardKey.swift */; };
+		8BB8B20E27937A8700A85FB9 /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20D27937A8700A85FB9 /* StyleGuide.swift */; };
 		8BEEAFA4276DB96C000ABB35 /* WordlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA3276DB96C000ABB35 /* WordlApp.swift */; };
 		8BEEAFA6276DB96C000ABB35 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA5276DB96C000ABB35 /* MainView.swift */; };
 		8BEEAFA8276DB96D000ABB35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA7276DB96D000ABB35 /* Assets.xcassets */; };
@@ -41,6 +45,10 @@
 		8B702255277654F500323A97 /* SettingsViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewData.swift; sourceTree = "<group>"; };
 		8B70225727765D0C00323A97 /* Rule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rule.swift; sourceTree = "<group>"; };
 		8BB8B2002777C20000A85FB9 /* ToggleCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCellView.swift; sourceTree = "<group>"; };
+		8BB8B203278266C500A85FB9 /* KeyboardKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardKeyView.swift; sourceTree = "<group>"; };
+		8BB8B20527826B3300A85FB9 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
+		8BB8B20727826BE300A85FB9 /* KeyboardKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardKey.swift; sourceTree = "<group>"; };
+		8BB8B20D27937A8700A85FB9 /* StyleGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleGuide.swift; sourceTree = "<group>"; };
 		8BEEAFA0276DB96C000ABB35 /* Wordl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wordl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEEAFA3276DB96C000ABB35 /* WordlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordlApp.swift; sourceTree = "<group>"; };
 		8BEEAFA5276DB96C000ABB35 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -85,6 +93,7 @@
 		8B7022482771088D00323A97 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8BB8B20727826BE300A85FB9 /* KeyboardKey.swift */,
 				8B7022492771089900323A97 /* WordFeedback.swift */,
 				8B70225727765D0C00323A97 /* Rule.swift */,
 				8B70224B277108C300323A97 /* Rules.swift */,
@@ -100,6 +109,23 @@
 				8B7022532771612C00323A97 /* PickerCellView.swift */,
 			);
 			path = CellViews;
+			sourceTree = "<group>";
+		};
+		8BB8B202278266B100A85FB9 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				8BB8B203278266C500A85FB9 /* KeyboardKeyView.swift */,
+				8BB8B20527826B3300A85FB9 /* KeyboardView.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		8BB8B20C27937A7600A85FB9 /* StyleGuide */ = {
+			isa = PBXGroup;
+			children = (
+				8BB8B20D27937A8700A85FB9 /* StyleGuide.swift */,
+			);
+			path = StyleGuide;
 			sourceTree = "<group>";
 		};
 		8BEEAF97276DB96C000ABB35 = {
@@ -142,6 +168,7 @@
 		8BEEAFB1276DBAF8000ABB35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BB8B202278266B100A85FB9 /* Keyboard */,
 				8B7022402771009800323A97 /* Settings */,
 				8BEEAFB3276DBB7A000ABB35 /* MainViewModel.swift */,
 				8BEEAFA5276DB96C000ABB35 /* MainView.swift */,
@@ -152,6 +179,7 @@
 		8BEEAFB5276DBC96000ABB35 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8BB8B20C27937A7600A85FB9 /* StyleGuide */,
 				8BEEAFB7276DBDE2000ABB35 /* propernames */,
 				8BEEAFB6276DBDE2000ABB35 /* words */,
 				8B70223E276F00B800323A97 /* oxford-3000 */,
@@ -241,6 +269,10 @@
 				8B70224F277116C700323A97 /* GameDictionary.swift in Sources */,
 				8B70225827765D0C00323A97 /* Rule.swift in Sources */,
 				8B702252277145E900323A97 /* SelectCellView.swift in Sources */,
+				8BB8B20827826BE300A85FB9 /* KeyboardKey.swift in Sources */,
+				8BB8B204278266C500A85FB9 /* KeyboardKeyView.swift in Sources */,
+				8BB8B20627826B3300A85FB9 /* KeyboardView.swift in Sources */,
+				8BB8B20E27937A8700A85FB9 /* StyleGuide.swift in Sources */,
 				8BEEAFA6276DB96C000ABB35 /* MainView.swift in Sources */,
 				8B702256277654F500323A97 /* SettingsViewData.swift in Sources */,
 				8BEEAFA4276DB96C000ABB35 /* WordlApp.swift in Sources */,

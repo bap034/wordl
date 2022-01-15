@@ -16,64 +16,74 @@ struct MainView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                Section {
-                    Text(viewModel.answerText)
-                        .onTapGesture {
-                            viewModel.onAnswerTextTapped()
-                        }
-                }
-                
-                Section {
-                    TextField(viewModel.helperText,
-                              text: $enteredText)
-                        .onSubmit {
-                            withAnimation {
-                                viewModel.onTextFieldDidSubmit(newText: enteredText)
-                                if viewModel.shouldResetTextField {
-                                    enteredText = ""
-                                    viewModel.didResetTextField()
+            VStack {
+                List {
+                    Section {
+                        Text(viewModel.answerText)
+                            .onTapGesture {
+                                viewModel.onAnswerTextTapped()
+                            }
+                    }
+                    
+                    Section {
+                        TextField(viewModel.helperText,
+                                  text: $enteredText)
+                            .onSubmit {
+                                withAnimation {
+                                    viewModel.onTextFieldDidSubmit(newText: enteredText)
+                                    if viewModel.shouldResetTextField {
+                                        enteredText = ""
+                                        viewModel.didResetTextField()
+                                    }
+                                }
+                            }
+                            .textInputAutocapitalization(.characters)
+                            .disableAutocorrection(true)
+                    }
+                    
+                    Section {
+                        ForEach(viewModel.guessedWords) { wordFeedback in
+                            HStack {
+                                ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
+                                    let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
+                                    Text(letterFeedback.letter)
+                                        .foregroundColor(color)
                                 }
                             }
                         }
-                        .textInputAutocapitalization(.characters)
-                        .disableAutocorrection(true)
+                    }
                 }
-                
-                Section {
-                    ForEach(viewModel.guessedWords) { wordFeedback in
-                        HStack {
-                            ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
-                                let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
-                                Text(letterFeedback.letter)
-                                    .foregroundColor(color)
+                .navigationTitle(
+                    Text("Wordl")
+                        .foregroundColor(StyleGuide.Color.primary)
+                )
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            viewModel.onNewGameTapped()
+                        }) {
+                            Image(systemName: "repeat.circle").imageScale(.large)
+                        }
+                    }
+                    
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button(action: {
+                            showSettings = true
+                        }) {
+                            NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
+                                Image(systemName: "gearshape").renderingMode(.original)
                             }
                         }
                     }
                 }
-            }
-            .navigationTitle(
-                Text("Wordl")
-            )
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        viewModel.onNewGameTapped()
-                    }) {
-                        Image(systemName: "repeat.circle").imageScale(.large)
-                    }
-                }
                 
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    Button(action: {
-                        showSettings = true
-                    }) {
-                        NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
-                            Image(systemName: "gearshape").imageScale(.large)
-                        }
-                    }
+                KeyboardView { keyboardKey in
+                    print("\(keyboardKey.value) tapped")
                 }
+                .frame(height: 155)
             }
+            .background(StyleGuide.Color.background)
+            .accentColor(StyleGuide.Color.accent)
         }
     }
 }

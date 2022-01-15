@@ -14,8 +14,8 @@ class MainViewModel: ObservableObject {
 
     private static let answerTextConstant = "Tap to see the answer"
     
-    @Published public private(set)var guessedWords = [WordFeedback]()
-    @Published public private(set)var answerText = MainViewModel.answerTextConstant
+    @Published public private(set) var guessedWords = [WordFeedback]()
+    @Published public private(set) var answerText = MainViewModel.answerTextConstant
     @Published public private(set) var shouldResetTextField = false
     @Published public private(set) var showSettings = false
     
