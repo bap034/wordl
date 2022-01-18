@@ -13,8 +13,9 @@ class MainViewModel: ObservableObject {
 
     @Published public private(set) var guessedWords = [WordFeedback]()
     @Published public private(set) var showSettings = false
-    @Published public private(set) var enteredText: String = ""
+    @Published public private(set) var enteredText = ""
     @Published public private(set) var keyboard: [KeyboardKey]
+    @Published public private(set) var alertText = ""
     
     var answerText: String { manager.answer }
     var helperText: String { "Guess the \(GameManager.shared.gameAnswerCount)-word" }
@@ -34,9 +35,9 @@ class MainViewModel: ObservableObject {
                 guessedWords.insert(wordFeedback, at: 0)
                 updateKeyboardFeedback(wordFeedback: wordFeedback)
                 enteredText = ""
+                alertText = ""
             case .failure(let error):
-                print(error)
-                // Show error text
+                alertText = error.localizedDescription
         }
     }
     private func updateKeyboardFeedback(wordFeedback: WordFeedback) {
@@ -69,7 +70,9 @@ extension MainViewModel {
     }
     func onNewGameTapped() {
         manager.newGame()
+        resetKeyboardFeedback()
         guessedWords = []
         enteredText = ""
+        alertText = ""
     }
 }

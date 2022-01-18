@@ -20,6 +20,11 @@ struct MainView: View {
             VStack {
                 ScrollView {
                     Section {
+                        Text(viewModel.alertText)
+                            .foregroundColor(StyleGuide.Color.accent)
+                    }
+                    
+                    Section {
                         if viewModel.enteredText.isEmpty {
                             Text(viewModel.helperText)
                                 .foregroundColor(StyleGuide.Color.secondary)

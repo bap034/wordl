@@ -140,6 +140,13 @@ extension GameManager {
     enum ValidationError: Error {
         case letterMismatch
         case invalidWord
+        
+        var localizedDescription: String {
+            switch self {
+                case .letterMismatch: return "Incorrect number of letters"
+                case .invalidWord: return "Invalid word"
+            }
+        }
     }
     
     private func validateGuess(_ guess: String) -> ValidationError? {
