@@ -11,10 +11,12 @@ import SwiftUI
 struct WordlApp: App {
     
     init() {
-        UINavigationBarAppearance().backgroundColor = UIColor(StyleGuide.Color.background)
-        UINavigationBarAppearance().titleTextAttributes = 
         UITableViewCell.appearance().backgroundColor = UIColor(StyleGuide.Color.background)
         UITableView.appearance().backgroundColor = UIColor(StyleGuide.Color.background)
+        
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(StyleGuide.Color.background)
+        UISegmentedControl.appearance().backgroundColor = UIColor(StyleGuide.Color.background)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor(StyleGuide.Color.primary)], for: .normal) 
     }
     
     var body: some Scene {
