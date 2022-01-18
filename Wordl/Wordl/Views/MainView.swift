@@ -9,70 +9,87 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State var enteredText: String = ""
-    @State var showSettings = false
+    @State private var enteredText: String = ""
+    @State private var showSettings = false
+    @State private var showAlert = false
     
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
         NavigationView {
-            List {
-                Section {
-                    Text(viewModel.answerText)
-                        .onTapGesture {
-                            viewModel.onAnswerTextTapped()
-                        }
-                }
+            ZStack {
+                Color.green
+                    .opacity(0.1)
+                    .ignoresSafeArea()
                 
-                Section {
-                    TextField(viewModel.helperText,
-                              text: $enteredText)
-                        .onSubmit {
-                            withAnimation {
-                                viewModel.onTextFieldDidSubmit(newText: enteredText)
-                                if viewModel.shouldResetTextField {
-                                    enteredText = ""
-                                    viewModel.didResetTextField()
+                VStack {
+                    ScrollView {
+                        Section {
+                            if viewModel.enteredText.isEmpty {
+                                Text(viewModel.helperText)
+                                    .foregroundColor(StyleGuide.Color.secondary)
+                            } else {
+                                Text(viewModel.enteredText)
+                                    .foregroundColor(StyleGuide.Color.primary)
+                            }
+                        }
+                        .padding()
+                        
+                        Section {
+                            ForEach(viewModel.guessedWords) { wordFeedback in
+                                HStack {
+                                    ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
+                                        let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
+                                        Text(letterFeedback.letter)
+                                            .foregroundColor(color)
+                                    }
                                 }
                             }
                         }
-                        .textInputAutocapitalization(.characters)
-                        .disableAutocorrection(true)
-                }
-                
-                Section {
-                    ForEach(viewModel.guessedWords) { wordFeedback in
-                        HStack {
-                            ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
-                                let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
-                                Text(letterFeedback.letter)
-                                    .foregroundColor(color)
+                    }
+                    .navigationTitle(
+                        Text("Wordl")
+                    )
+                    .toolbar {
+                        ToolbarItemGroup(placement: .navigationBarLeading) {
+                            Button(action: {
+                                showSettings = true
+                            }) {
+                                NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
+                                    Image(systemName: "gearshape").renderingMode(.original)
+                                }
+                            }
+                        }
+                        
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                showAlert = true
+                            }) {
+                                Image(systemName: "character.bubble").imageScale(.large)
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text("Answer"),
+                                    message: Text(viewModel.answerText)
+                                )
+                            }
+                            
+                            Button(action: {
+                                viewModel.onNewGameTapped()
+                            }) {
+                                Image(systemName: "repeat.circle").imageScale(.large)
                             }
                         }
                     }
-                }
-            }
-            .navigationTitle(
-                Text("Wordl")
-            )
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        viewModel.onNewGameTapped()
-                    }) {
-                        Image(systemName: "repeat.circle").imageScale(.large)
+                    
+                    KeyboardView(keys: viewModel.keyboard) { keyboardKey in
+                        viewModel.onKeyTapped(key: keyboardKey)
                     }
+                    .frame(height: 155)
+                    .padding([.leading, .trailing])
                 }
-                
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-                    Button(action: {
-                        showSettings = true
-                    }) {
-                        NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
-                            Image(systemName: "gearshape").imageScale(.large)
-                        }
-                    }
-                }
+                .background(StyleGuide.Color.background)
+                .accentColor(StyleGuide.Color.accent)
             }
         }
     }
@@ -83,11 +100,11 @@ extension MainView {
         let color: Color
         switch letterFeedbackType {
             case .correct:
-                color = .teal
+                color = StyleGuide.Color.Feedback.correct
             case .wrongSpot:
-                color = .orange
+                color = StyleGuide.Color.Feedback.wrongSpot
             case .incorrect:
-                color = .black
+                color = StyleGuide.Color.Feedback.unused
         }
         return color
     }
