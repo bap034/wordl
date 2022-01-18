@@ -41,6 +41,8 @@ struct SettingsView: View {
                         }
                     }
                 }
+                .foregroundColor(StyleGuide.Color.accent)
+                .listRowBackground(StyleGuide.Color.background)
             }
         }
         .navigationTitle("Settings")

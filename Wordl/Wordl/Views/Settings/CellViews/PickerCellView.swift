@@ -23,11 +23,12 @@ struct PickerCellView: View {
                     if let sureTitle = titleText {
                         Text(sureTitle)
                             .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(StyleGuide.Color.primary)
                     }
                     if let sureDescription = descriptionText {
                         Text(sureDescription)
                             .font(.system(size: 16, weight: .light))
-                            .foregroundColor(Color.gray)
+                            .foregroundColor(StyleGuide.Color.secondary)
                     }
                 }
                 
@@ -36,7 +37,7 @@ struct PickerCellView: View {
                 if let sureSelectedValue = selectedValue {
                     Text(sureSelectedValue)
                         .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(StyleGuide.Color.secondary)
                 }
                 
             }
@@ -62,6 +63,7 @@ struct PickerCellView: View {
                 }
             }
         }
+        .background(StyleGuide.Color.background)
         
     }
 }

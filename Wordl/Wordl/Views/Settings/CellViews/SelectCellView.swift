@@ -20,11 +20,12 @@ struct SelectCellView: View {
                 if let sureTitle = titleText {
                     Text(sureTitle)
                         .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(StyleGuide.Color.primary)
                 }
                 if let sureDescription = descriptionText {
                     Text(sureDescription)
                         .font(.system(size: 16, weight: .light))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(StyleGuide.Color.secondary)
                 }
             }
             
@@ -34,8 +35,8 @@ struct SelectCellView: View {
                 Image(systemName: "checkmark").imageScale(.large)
             })
                 .toggleStyle(.button)
-                .foregroundColor(isSelected ? .black : .white)
-                .tint(.white)
+                .foregroundColor(isSelected ? StyleGuide.Color.primary : StyleGuide.Color.background)
+                .tint(StyleGuide.Color.background)
         }
         .padding([.leading, .trailing])
         .contentShape(Rectangle())
@@ -45,6 +46,7 @@ struct SelectCellView: View {
                 onTapped?()                
 //            }
         }
+        .background(StyleGuide.Color.background)
 //        Divider()
     }
 }

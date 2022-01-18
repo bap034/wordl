@@ -19,11 +19,13 @@ struct ToggleCellView: View {
                 if let sureTitle = titleText {
                     Text(sureTitle)
                         .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(StyleGuide.Color.primary)
+                    
                 }
                 if let sureDescription = descriptionText {
                     Text(sureDescription)
                         .font(.system(size: 16, weight: .light))
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(StyleGuide.Color.secondary)
                 }
             }
             
@@ -43,13 +45,16 @@ struct ToggleCellView: View {
                 onToggled?(isOn)                
 //            }
         }
+        .background(StyleGuide.Color.background)
 //        Divider()
     }
 }
 
 struct ToggleCellView_Previews: PreviewProvider {
     static var previews: some View {
-        ToggleCellView(titleText: "Title text", isOn: true)
-        ToggleCellView(isOn: false)
+        VStack {
+            ToggleCellView(titleText: "Title text", isOn: true)
+            ToggleCellView(isOn: false)
+        }
     }
 }
