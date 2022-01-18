@@ -34,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B65AEEB27969E28006E1C49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8B70223E276F00B800323A97 /* oxford-3000 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "oxford-3000"; sourceTree = "<group>"; };
 		8B702241277100C000323A97 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		8B702243277100CB00323A97 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 		8BEEAFA2276DB96C000ABB35 /* Wordl */ = {
 			isa = PBXGroup;
 			children = (
+				8B65AEEB27969E28006E1C49 /* Info.plist */,
 				8B7022482771088D00323A97 /* Models */,
 				8B7022452771012000323A97 /* Managers */,
 				8BEEAFB1276DBAF8000ABB35 /* Views */,
@@ -416,6 +418,7 @@
 				DEVELOPMENT_TEAM = 86WXZVZ79J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Wordl/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -446,6 +449,7 @@
 				DEVELOPMENT_TEAM = 86WXZVZ79J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Wordl/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
