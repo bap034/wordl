@@ -18,15 +18,16 @@ struct KeyboardView: View {
         return largestRowCount
     }
     
-    @State var topRowKeys = KeyboardManager.generateTopRowKeys()
-    @State var midRowKeys = KeyboardManager.generateMidRowKeys()
-    @State var botRowKeys = KeyboardManager.generateBotRowKeys()
+    var keys: [KeyboardKey]
+    private var topRowKeys: [KeyboardKey] { keys.filter({ $0.rowType == .top }) }
+    private var midRowKeys: [KeyboardKey] { keys.filter({ $0.rowType == .mid }) }
+    private var botRowKeys: [KeyboardKey] { keys.filter({ $0.rowType == .bot }) }
     
     var onKeyTapped: ((KeyboardKey)->Void)?
     
     var body: some View {
         GeometryReader { (geometry) in
-            let keyLength: CGFloat = (geometry.size.width / CGFloat(largestRowKeyCount)) - spacing
+            let keyLength: CGFloat = max((geometry.size.width / CGFloat(largestRowKeyCount)) - spacing, 0)
             
             VStack(spacing: spacing) {
                 // Top Row
@@ -45,12 +46,14 @@ struct KeyboardView: View {
     func generateKeyRow(keys: [KeyboardKey], keyLength: CGFloat) -> some View {
         HStack(spacing: spacing) {
             ForEach(keys) { key in
-                let keyWidth: CGFloat? = (key.sizeType == .fixed) ? keyLength : nil
+                let keyMinWidth: CGFloat = keyLength
+                let keyMaxWidth: CGFloat? = (key.sizeType == .fixed) ? keyLength : keyLength*2
+                let keyHeight = keyLength * 1.5
                 
-                KeyboardKeyView(keyText: key.value, keyFeedbackType: key.feedbackType, onTap: {
+                KeyboardKeyView(keyText: key.type.displayText, keyFeedbackType: key.feedbackType, onTap: {
                     onKeyTapped?(key)
                 })
-                    .frame(width: keyWidth, height: keyLength * 1.5)
+                    .frame(minWidth: keyMinWidth, maxWidth: keyMaxWidth, minHeight: keyHeight, maxHeight: keyHeight)
             }
         }
     }
@@ -58,8 +61,8 @@ struct KeyboardView: View {
 
 struct KeyboardView_Previews: PreviewProvider {
     static var previews: some View {
-        KeyboardView { keyboardKey in
-            print("\(keyboardKey.value) tapped")
+        KeyboardView(keys: KeyboardManager.shared.keys) { keyboardKey in
+            print("\(keyboardKey.type.displayText) tapped")
         }
     }
 }

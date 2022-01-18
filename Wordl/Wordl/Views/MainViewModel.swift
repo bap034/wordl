@@ -7,57 +7,69 @@
 
 import Combine
 import Foundation
-
-
+import SwiftUI
 
 class MainViewModel: ObservableObject {
 
-    private static let answerTextConstant = "Tap to see the answer"
-    
     @Published public private(set) var guessedWords = [WordFeedback]()
-    @Published public private(set) var answerText = MainViewModel.answerTextConstant
-    @Published public private(set) var shouldResetTextField = false
     @Published public private(set) var showSettings = false
+    @Published public private(set) var enteredText: String = ""
+    @Published public private(set) var keyboard: [KeyboardKey]
     
+    var answerText: String { manager.answer }
     var helperText: String { "Guess the \(GameManager.shared.gameAnswerCount)-word" }
     private var manager: GameManager
+    private var keyboardManager: KeyboardManager
         
-    init(manager: GameManager = GameManager.shared) {
+    init(manager: GameManager = GameManager.shared, keyboardManager: KeyboardManager = KeyboardManager.shared) {
         self.manager = manager
+        self.keyboardManager = keyboardManager
+        keyboard = keyboardManager.keys
     }
     
-    private func resetAnswerText() {
-        answerText = MainViewModel.answerTextConstant
+    private func submitGuess(newText: String) {
+        let result = manager.guessWord(newText)
+        switch result {
+            case .success(let wordFeedback):
+                guessedWords.insert(wordFeedback, at: 0)
+                updateKeyboardFeedback(wordFeedback: wordFeedback)
+                enteredText = ""
+            case .failure(let error):
+                print(error)
+                // Show error text
+        }
+    }
+    private func updateKeyboardFeedback(wordFeedback: WordFeedback) {
+        wordFeedback.letterFeedbacks.forEach { letterFeedback in
+            let keyId = letterFeedback.letter.uppercased()
+            let feedbackType = KeyboardKeyFeedbackType(letterFeedbackType: letterFeedback.dataType)
+            keyboardManager.updateKey(keyId: keyId, feedbackType: feedbackType)
+        }
+        keyboard = keyboardManager.keys
+    }
+    private func resetKeyboardFeedback() {
+        keyboardManager.resetKeyboard()
+        keyboard = keyboardManager.keys
     }
 }
 
 // MARK: - View Triggered Events
 extension MainViewModel {
-    func onTextFieldDidSubmit(newText: String) {
-        let result = manager.guessWord(newText)
-        switch result {
-            case .success(let wordFeedback):
-                guessedWords.insert(wordFeedback, at: 0)
-                shouldResetTextField = true
-            case .failure(let error):
-                print(error)
-                // Show error text
-        }
-        
-    }
-    func didResetTextField() {
-        shouldResetTextField = false
-    }
-    func onAnswerTextTapped() {
-        if answerText == MainViewModel.answerTextConstant {
-            answerText = manager.answer
-        } else {
-            resetAnswerText()
+    func onKeyTapped(key: KeyboardKey) {
+        switch key.type {
+            case .letter(_):
+                enteredText += key.type.displayText
+            case .submit:
+                submitGuess(newText: enteredText)
+            case .delete:
+                enteredText = String(enteredText.dropLast())
+            case .spacer:
+                break
         }
     }
     func onNewGameTapped() {
         manager.newGame()
-        resetAnswerText()
         guessedWords = []
+        enteredText = ""
     }
 }

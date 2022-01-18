@@ -23,6 +23,7 @@
 		8BB8B20627826B3300A85FB9 /* KeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20527826B3300A85FB9 /* KeyboardView.swift */; };
 		8BB8B20827826BE300A85FB9 /* KeyboardKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20727826BE300A85FB9 /* KeyboardKey.swift */; };
 		8BB8B20E27937A8700A85FB9 /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20D27937A8700A85FB9 /* StyleGuide.swift */; };
+		8BB8B2102794C5DF00A85FB9 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB8B20F2794C5DF00A85FB9 /* KeyboardManager.swift */; };
 		8BEEAFA4276DB96C000ABB35 /* WordlApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA3276DB96C000ABB35 /* WordlApp.swift */; };
 		8BEEAFA6276DB96C000ABB35 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA5276DB96C000ABB35 /* MainView.swift */; };
 		8BEEAFA8276DB96D000ABB35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BEEAFA7276DB96D000ABB35 /* Assets.xcassets */; };
@@ -49,6 +50,7 @@
 		8BB8B20527826B3300A85FB9 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
 		8BB8B20727826BE300A85FB9 /* KeyboardKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardKey.swift; sourceTree = "<group>"; };
 		8BB8B20D27937A8700A85FB9 /* StyleGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleGuide.swift; sourceTree = "<group>"; };
+		8BB8B20F2794C5DF00A85FB9 /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		8BEEAFA0276DB96C000ABB35 /* Wordl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wordl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEEAFA3276DB96C000ABB35 /* WordlApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordlApp.swift; sourceTree = "<group>"; };
 		8BEEAFA5276DB96C000ABB35 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				8B7022462771013100323A97 /* GameManager.swift */,
 				8B70224E277116C700323A97 /* GameDictionary.swift */,
+				8BB8B20F2794C5DF00A85FB9 /* KeyboardManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				8B70225827765D0C00323A97 /* Rule.swift in Sources */,
 				8B702252277145E900323A97 /* SelectCellView.swift in Sources */,
 				8BB8B20827826BE300A85FB9 /* KeyboardKey.swift in Sources */,
+				8BB8B2102794C5DF00A85FB9 /* KeyboardManager.swift in Sources */,
 				8BB8B204278266C500A85FB9 /* KeyboardKeyView.swift in Sources */,
 				8BB8B20627826B3300A85FB9 /* KeyboardView.swift in Sources */,
 				8BB8B20E27937A8700A85FB9 /* StyleGuide.swift in Sources */,

@@ -7,11 +7,49 @@
 
 import Foundation
 
+enum KeyboardKeyType {
+    case delete
+    case letter(String)
+    case submit
+    case spacer
+    
+    var displayText: String {
+        switch self {
+            case .letter(let value):
+                return value.uppercased()
+            case .submit:
+                return "☺︎"
+            case .delete:
+                return "⌫"
+            case .spacer:
+                return ""
+        }
+    }
+}
+
+enum KeyboardKeyRowType {
+    case top
+    case mid
+    case bot
+}
+
 enum KeyboardKeyFeedbackType {
+    case spacer
     case normal
     case unused
     case wrongSpot
     case correct
+    
+    init(letterFeedbackType: WordFeedback.LetterFeedback.DataType) {
+        switch letterFeedbackType {
+            case .correct:
+                self = .correct
+            case .incorrect:
+                self = .unused
+            case .wrongSpot:
+                self = .wrongSpot            
+        }
+    }
 }
 enum KeyboardKeySizeType {
     case fixed
@@ -19,35 +57,10 @@ enum KeyboardKeySizeType {
 }
 
 struct KeyboardKey: Identifiable {
-    let value: String
+    let type: KeyboardKeyType
+    let rowType: KeyboardKeyRowType
     var feedbackType: KeyboardKeyFeedbackType
     let sizeType: KeyboardKeySizeType
     
-    var id: String { value }
-}
-
-class KeyboardManager {
-    static func generateTopRowKeys() -> [KeyboardKey] {
-        let keyStrings = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"]
-        let keyboardKeys = generateKeys(keyStrings: keyStrings)
-        return keyboardKeys
-    }
-    static func generateMidRowKeys() -> [KeyboardKey] {
-        let keyStrings = ["A", "S", "D", "F", "G", "H", "J", "K", "L"]
-        let keyboardKeys = generateKeys(keyStrings: keyStrings)
-        return keyboardKeys
-    }
-    static func generateBotRowKeys() -> [KeyboardKey] {
-        let deleteKey = KeyboardKey(value: "⌫", feedbackType: .normal, sizeType: .dynamic)
-        let submitKey = KeyboardKey(value: "⇪", feedbackType: .normal, sizeType: .dynamic)
-        let letterKeyStrings = ["Z", "X", "C", "V", "B", "N", "M"]
-        let keyboardKeys = [deleteKey] + generateKeys(keyStrings: letterKeyStrings) + [submitKey]
-        return keyboardKeys
-    }
-    static func generateKeys(keyStrings: [String]) -> [KeyboardKey] {
-        let keyboardKeys = keyStrings.map({ keyString -> KeyboardKey in
-            return KeyboardKey(value: keyString, feedbackType: .normal, sizeType: .fixed)
-        })
-        return keyboardKeys
-    }
+    var id: String { type.displayText }
 }

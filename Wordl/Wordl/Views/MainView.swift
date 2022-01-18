@@ -9,37 +9,26 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State var enteredText: String = ""
-    @State var showSettings = false
+    @State private var enteredText: String = ""
+    @State private var showSettings = false
+    @State private var showAlert = false
     
     @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
         NavigationView {
             VStack {
-                List {
+                ScrollView {
                     Section {
-                        Text(viewModel.answerText)
-                            .onTapGesture {
-                                viewModel.onAnswerTextTapped()
-                            }
+                        if viewModel.enteredText.isEmpty {
+                            Text(viewModel.helperText)
+                                .foregroundColor(StyleGuide.Color.secondary)
+                        } else {
+                            Text(viewModel.enteredText)
+                                .foregroundColor(StyleGuide.Color.primary)
+                        }
                     }
-                    
-                    Section {
-                        TextField(viewModel.helperText,
-                                  text: $enteredText)
-                            .onSubmit {
-                                withAnimation {
-                                    viewModel.onTextFieldDidSubmit(newText: enteredText)
-                                    if viewModel.shouldResetTextField {
-                                        enteredText = ""
-                                        viewModel.didResetTextField()
-                                    }
-                                }
-                            }
-                            .textInputAutocapitalization(.characters)
-                            .disableAutocorrection(true)
-                    }
+                    .padding()
                     
                     Section {
                         ForEach(viewModel.guessedWords) { wordFeedback in
@@ -55,17 +44,8 @@ struct MainView: View {
                 }
                 .navigationTitle(
                     Text("Wordl")
-                        .foregroundColor(StyleGuide.Color.primary)
                 )
                 .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            viewModel.onNewGameTapped()
-                        }) {
-                            Image(systemName: "repeat.circle").imageScale(.large)
-                        }
-                    }
-                    
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         Button(action: {
                             showSettings = true
@@ -75,12 +55,33 @@ struct MainView: View {
                             }
                         }
                     }
+                    
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showAlert = true
+                        }) {
+                            Image(systemName: "character.bubble").imageScale(.large)
+                        }
+                        .alert(isPresented: $showAlert) {
+                            Alert(
+                                title: Text("Answer"),
+                                message: Text(viewModel.answerText)
+                            )
+                        }
+                        
+                        Button(action: {
+                            viewModel.onNewGameTapped()
+                        }) {
+                            Image(systemName: "repeat.circle").imageScale(.large)
+                        }
+                    }
                 }
                 
-                KeyboardView { keyboardKey in
-                    print("\(keyboardKey.value) tapped")
+                KeyboardView(keys: viewModel.keyboard) { keyboardKey in
+                    viewModel.onKeyTapped(key: keyboardKey)
                 }
                 .frame(height: 155)
+                .padding([.leading, .trailing])
             }
             .background(StyleGuide.Color.background)
             .accentColor(StyleGuide.Color.accent)
@@ -97,7 +98,7 @@ extension MainView {
             case .wrongSpot:
                 color = .orange
             case .incorrect:
-                color = .black
+                color = StyleGuide.Color.primary
         }
         return color
     }
