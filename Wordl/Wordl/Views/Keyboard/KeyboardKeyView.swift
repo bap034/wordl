@@ -52,11 +52,11 @@ extension KeyboardKeyView {
             case .spacer:
                 color = .clear
             case .normal:
-                color = StyleGuide.Color.primary
+                color = StyleGuide.Color.Feedback.normal
             case .correct:
-                color = .teal
+                color = StyleGuide.Color.Feedback.correct
             case .wrongSpot:
-                color = .orange
+                color = StyleGuide.Color.Feedback.wrongSpot
             case .unused:
                 color = .clear
         }
@@ -75,7 +75,7 @@ extension KeyboardKeyView {
             case .wrongSpot:
                 color = .clear
             case .unused:
-                color = StyleGuide.Color.primary
+                color = StyleGuide.Color.Feedback.unused
         }
         return color
     }
@@ -86,13 +86,13 @@ extension KeyboardKeyView {
             case .spacer:
                 color = .clear
             case .normal:
-                color = StyleGuide.Color.accent
+                color = StyleGuide.Color.background
             case .correct:
-                color = StyleGuide.Color.accent
+                color = StyleGuide.Color.background
             case .wrongSpot:
-                color = StyleGuide.Color.accent
+                color = StyleGuide.Color.background
             case .unused:
-                color = StyleGuide.Color.primary
+                color = StyleGuide.Color.Feedback.unused
         }
         return color
     }

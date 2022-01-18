@@ -17,74 +17,80 @@ struct MainView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                ScrollView {
-                    Section {
-                        if viewModel.enteredText.isEmpty {
-                            Text(viewModel.helperText)
-                                .foregroundColor(StyleGuide.Color.secondary)
-                        } else {
-                            Text(viewModel.enteredText)
-                                .foregroundColor(StyleGuide.Color.primary)
+            ZStack {
+                Color.green
+                    .opacity(0.1)
+                    .ignoresSafeArea()
+                
+                VStack {
+                    ScrollView {
+                        Section {
+                            if viewModel.enteredText.isEmpty {
+                                Text(viewModel.helperText)
+                                    .foregroundColor(StyleGuide.Color.secondary)
+                            } else {
+                                Text(viewModel.enteredText)
+                                    .foregroundColor(StyleGuide.Color.primary)
+                            }
                         }
-                    }
-                    .padding()
-                    
-                    Section {
-                        ForEach(viewModel.guessedWords) { wordFeedback in
-                            HStack {
-                                ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
-                                    let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
-                                    Text(letterFeedback.letter)
-                                        .foregroundColor(color)
+                        .padding()
+                        
+                        Section {
+                            ForEach(viewModel.guessedWords) { wordFeedback in
+                                HStack {
+                                    ForEach(wordFeedback.letterFeedbacks) { letterFeedback in
+                                        let color = getTextColor(letterFeedbackType: letterFeedback.dataType)
+                                        Text(letterFeedback.letter)
+                                            .foregroundColor(color)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                .navigationTitle(
-                    Text("Wordl")
-                )
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button(action: {
-                            showSettings = true
-                        }) {
-                            NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
-                                Image(systemName: "gearshape").renderingMode(.original)
+                    .navigationTitle(
+                        Text("Wordl")
+                    )
+                    .toolbar {
+                        ToolbarItemGroup(placement: .navigationBarLeading) {
+                            Button(action: {
+                                showSettings = true
+                            }) {
+                                NavigationLink(destination: SettingsView(viewModel: SettingsViewModel()), isActive: $showSettings) {
+                                    Image(systemName: "gearshape").renderingMode(.original)
+                                }
+                            }
+                        }
+                        
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                showAlert = true
+                            }) {
+                                Image(systemName: "character.bubble").imageScale(.large)
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(
+                                    title: Text("Answer"),
+                                    message: Text(viewModel.answerText)
+                                )
+                            }
+                            
+                            Button(action: {
+                                viewModel.onNewGameTapped()
+                            }) {
+                                Image(systemName: "repeat.circle").imageScale(.large)
                             }
                         }
                     }
                     
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showAlert = true
-                        }) {
-                            Image(systemName: "character.bubble").imageScale(.large)
-                        }
-                        .alert(isPresented: $showAlert) {
-                            Alert(
-                                title: Text("Answer"),
-                                message: Text(viewModel.answerText)
-                            )
-                        }
-                        
-                        Button(action: {
-                            viewModel.onNewGameTapped()
-                        }) {
-                            Image(systemName: "repeat.circle").imageScale(.large)
-                        }
+                    KeyboardView(keys: viewModel.keyboard) { keyboardKey in
+                        viewModel.onKeyTapped(key: keyboardKey)
                     }
+                    .frame(height: 155)
+                    .padding([.leading, .trailing])
                 }
-                
-                KeyboardView(keys: viewModel.keyboard) { keyboardKey in
-                    viewModel.onKeyTapped(key: keyboardKey)
-                }
-                .frame(height: 155)
-                .padding([.leading, .trailing])
+                .background(StyleGuide.Color.background)
+                .accentColor(StyleGuide.Color.accent)
             }
-            .background(StyleGuide.Color.background)
-            .accentColor(StyleGuide.Color.accent)
         }
     }
 }
@@ -94,11 +100,11 @@ extension MainView {
         let color: Color
         switch letterFeedbackType {
             case .correct:
-                color = .teal
+                color = StyleGuide.Color.Feedback.correct
             case .wrongSpot:
-                color = .orange
+                color = StyleGuide.Color.Feedback.wrongSpot
             case .incorrect:
-                color = StyleGuide.Color.primary
+                color = StyleGuide.Color.Feedback.unused
         }
         return color
     }

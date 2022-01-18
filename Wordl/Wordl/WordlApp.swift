@@ -11,7 +11,8 @@ import SwiftUI
 struct WordlApp: App {
     
     init() {
-//        UITableView.appearance().separatorStyle = .none
+        UINavigationBarAppearance().backgroundColor = UIColor(StyleGuide.Color.background)
+        UINavigationBarAppearance().titleTextAttributes = 
         UITableViewCell.appearance().backgroundColor = UIColor(StyleGuide.Color.background)
         UITableView.appearance().backgroundColor = UIColor(StyleGuide.Color.background)
     }
